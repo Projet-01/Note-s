@@ -1,0 +1,85 @@
+@media (max-width: 600px) {
+    body {
+        background-color: lightblue;
+    }
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    text-align: center;
+}
+
+#title {
+    font-size: 36px;
+    font-weight: bold;
+    margin: 20px 0;
+}
+
+#button-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+button {
+    padding: 10px 15px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+#note {
+    width: 60%;
+    min-height: 300px;
+    max-height: 80vh;
+    margin: 0 auto;
+    padding: 0 10px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    font-size: 18px;
+    resize: vertical;
+    text-align: left;
+    white-space: pre-wrap;
+    outline: none;
+    overflow-y: auto;
+    padding-top: 0;
+    padding-bottom: 0;
+    line-height: 1.5;
+    margin-top: 0;
+}
+
+.note-buttons {
+    margin: 10px 0;
+}
+
+.placeholder {
+    color: #bbb;
+}
+
+#links {
+    margin-top: 20px;
+}
+
+#links a {
+    margin: 10px;
+    text-decoration: none;
+    color: #4CAF50;
+    font-weight: bold;
+}
+
+#links a:hover {
+    text-decoration: underline;
+}

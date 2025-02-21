@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Note's</title>
+    <link rel="stylesheet" href="style.css"> <!-- Lien vers ton fichier CSS -->
+</head>
+<body>
+
+    <div id="title">Note's</div>
+
+    <div id="button-container">
+        <button onclick="formatText('bold')">Gras</button>
+        <button onclick="formatText('italic')">Italique</button>
+        <button onclick="formatText('underline')">Souligner</button>
+        <button onclick="formatText('strikeThrough')">Barré</button>
+        <button onclick="formatText('insertUnorderedList')">Liste à puces</button>
+        <button onclick="formatText('insertOrderedList')">Liste numérotée</button>
+        <button onclick="insertLink()">Insérer un lien</button>
+        <button onclick="window.print()">Imprimer</button>
+        <button onclick="downloadWord()">Télécharger en Word</button>
+    </div>
+
+    <div id="note" contenteditable="true" onfocus="removePlaceholder()" onblur="addPlaceholder()" oninput="cleanUp(event)">
+        <span class="placeholder" id="placeholder">Écris tes notes ici...</span>
+    </div>
+
+    <div id="links">
+        <a href="equipe.html" target="_self">Notre équipe</a>
+        <a href="comment-ca-marche.html" target="_self">Comment ça marche ?</a>
+        <a href="soutenir.html" target="_self">Soutenir le projet</a>
+    </div>
+
+    <script>
+        // Fonction pour formater le texte
+        function formatText(command) {
+            document.execCommand(command, false, null);
+        }
+
+        // Fonction pour insérer un lien
+        function insertLink() {
+            const url = prompt("Entrez l'URL:");
+            document.execCommand('createLink', false, url);
+        }
+
+        // Fonction pour télécharger le contenu au format Word
+        function downloadWord() {
+            const text = document.getElementById('note').innerHTML;
+            const blob = new Blob([text], { type: 'application/msword' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'notes.doc';
+            link.click();
+        }
+
+        // Fonction pour supprimer le placeholder quand on clique
+        function removePlaceholder() {
+            const placeholder = document.getElementById('placeholder');
+            if (placeholder) {
+                placeholder.style.display = 'none'; // Cache le placeholder
+            }
+        }
+
+        // Fonction pour ajouter le placeholder si la zone de texte est vide
+        function addPlaceholder() {
+            const noteContent = document.getElementById('note').innerText.trim();
+            const placeholder = document.getElementById('placeholder');
+            if (!noteContent && !placeholder) {
+                const placeholderText = document.createElement('span');
+                placeholderText.id = 'placeholder';
+                placeholderText.classList.add('placeholder');
+                placeholderText.textContent = 'Écris tes notes ici...';
+                document.getElementById('note').prepend(placeholderText);
+            }
+        }
+
+        // Fonction pour nettoyer l'entrée (ajouter des sauts de ligne)
+        function cleanUp(event) {
+            if (event.keyCode === 13) {
+                document.execCommand('insertHTML', false, '<br><br>');
+                event.preventDefault();
+            }
+        }
+
+        // Sauvegarde le contenu dans le localStorage à chaque modification
+        document.getElementById('note').addEventListener('input', function () {
+            localStorage.setItem('noteContent', document.getElementById('note').innerHTML);
+        });
+
+        // Récupère le contenu sauvegardé lors du chargement de la page
+        window.onload = function() {
+            const savedContent = localStorage.getItem('noteContent');
+            if (savedContent) {
+                document.getElementById('note').innerHTML = savedContent;
+            } else {
+                addPlaceholder(); // Si rien n'est sauvegardé, ajoute le placeholder
+            }
+            addPlaceholder();
+        };
+    </script>
+
+</body>
+</html>
